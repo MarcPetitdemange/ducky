@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.31
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: azerty1234
+      MYSQL_DATABASE: ducky
+      MYSQL_USER: mpetitdemange
+      MYSQL_PASSWORD: azerty1234
+    ports:
+      - "3307:3306"
