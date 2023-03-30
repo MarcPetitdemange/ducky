@@ -23,10 +23,13 @@ Execute the following commands :
   
 3. `npm start`
 
-
 ## 👨🏼‍💻 Contribute
 
 You can fork the project and make some pull requests. They will be checked by the Versusmind's team.
+
+## Ducky's command list
+
+* `/birthday`
 
 ## 📄 Documentation and references
 

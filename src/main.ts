@@ -3,22 +3,26 @@ import { AppModule } from './app.module';
 import { User } from './model/User';
 import { StringUtils } from './model/utils/StringUtils';
 import * as cron from 'node-cron';
-import { AppDataSource } from './data-source';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.useStaticAssets(join(__dirname, '', 'public'));
+  app.setBaseViewsDir(join(__dirname, '', 'views'));
+  app.setViewEngine('hbs');
 
   const config = new DocumentBuilder()
-  .setTitle('Ducky API')
-  .setDescription('The Ducky API description')
-  .setVersion('1.0')
-  .addTag('Ducky')
-  .build();
+    .setTitle('Ducky API')
+    .setDescription('The Ducky API description')
+    .setVersion('1.0')
+    .addTag('Ducky')
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  
-  await app.listen(3000);
+
+  app.listen(3000);
 }
 bootstrap();
 
@@ -30,7 +34,3 @@ cron.schedule('* * * * *', () => {
   userTest.lastname = 'Petitdemange';
   console.log(StringUtils.wishABirthday(userTest));
 });
-
-AppDataSource.initialize()
-  .then()
-  .catch((error) => console.log(error));
